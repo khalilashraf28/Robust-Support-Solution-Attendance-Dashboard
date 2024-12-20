@@ -1,11 +1,16 @@
 import streamlit as st
 import pandas as pd
+st.set_page_config(page_title="Attendance Dashboard",page_icon="RSS.png",initial_sidebar_state="collapsed")
 
 # Load CSV file with usernames and passwords
 @st.cache_data
 def load_user_data():
-    return pd.read_csv("user_data.csv")  # Ensure this CSV exists with columns 'Username' and 'Password'
-st.set_page_config(page_title="Attendance Dashboard",page_icon="RSS.png",initial_sidebar_state="collapsed")
+    df = pd.read_csv("user_data.csv")
+    df["Password"] = df["Password"].astype(str)
+    return df
+    
+user_data = load_user_data()
+
 st.markdown("""
         <style>
         div.stHeading{
@@ -20,7 +25,7 @@ st.markdown("""
             font-size: 14px;
             margin: 5px;
         }
-        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(3) > div > div > div>h1{
+        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(4) > div > div > div >h1{
             color:whitesmoke;
             font-size:xx-large
         }
@@ -42,6 +47,21 @@ st.markdown("""
             background-color:white;
             border-radius:30px;
         }
+        /*button*/
+        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(6) > div > button {
+            display: block;
+            margin: 0 auto; /* Center the button */
+            background-color: #27be27; /* Set background color to green */
+            color: white; /* Set font color to white */
+            border: none; /* Remove border */
+            padding: 10px 20px; /* Add padding for better aesthetics */
+            border-radius: 5px; /* Optional: rounded corners */
+            font-size: 16px; /* Set font size */
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
+        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container  > div > div > div > div:nth-child(6) > div > button:hover {
+            background-color: darkgreen; /* Darker green on hover */
+        }
         </style>
     """, unsafe_allow_html=True)
 def main():
@@ -53,7 +73,6 @@ def main():
 
     # with col2:
     st.title("❚█══Robust Support & Solution══█❚")
-    user_data = load_user_data()
     usernames = user_data["Username"].tolist()
 
     # Initialize session state
@@ -68,8 +87,8 @@ def main():
 
             # Check login
             if login_btn:
-                user_row = user_data[user_data["Username"] == selected_username]
-                if not user_row.empty and user_row.iloc[0]["Password"] == password:
+                user_row = user_data[user_data["Username"] == selected_username ]["Password"]
+                if not user_row.empty and user_row.values[0] == password:
                     st.success(f"Welcome, {selected_username}!")
                     st.session_state["logged_in"] = True
                     st.session_state["Username"] = selected_username
@@ -85,23 +104,11 @@ def main():
 
 if __name__ == "__main__":
     main()
-# Custom HTML line with a button
-st.markdown(
-    """
-    <div style="display: flex; justify-content: center; align-items: center;">
-        <a href="#" style="
-            text-decoration: none; 
-            background-color: #4CAF50; 
-            color: white; 
-            padding: 10px 20px; 
-            border-radius: 5px;
-            font-size: 16px;">
-            For Admin Panel
-        </a>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+
+# Create a regular Streamlit button
+if st.button("Admin Panel"):
+    # Navigate to the 'admin.py' page
+    st.switch_page("pages/admin.py")
 st.markdown(
     """
     <style>
