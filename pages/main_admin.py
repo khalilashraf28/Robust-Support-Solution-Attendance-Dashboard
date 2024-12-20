@@ -11,7 +11,7 @@ if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     with st.spinner('You must log in first!'):
         st.cache_data.clear()
         sleep(2)
-        st.switch_page("login.py")
+        st.switch_page("page/admin.py")
 
 st.set_page_config(page_title="RSS Attendance Dashboard", layout="wide",page_icon="RSS.png",initial_sidebar_state="collapsed")
 page = st_navbar(["","Home", "Late Analysis", "Time Sheet", "Month", "Logout"])
@@ -32,23 +32,22 @@ components.html(
 if page == 'Home':
     pass
 elif page == 'Late Analysis':
-    st.switch_page("pages/late.py")
+    st.switch_page("pages/late_admin.py")
 elif page == 'Time Sheet':
-    st.switch_page("pages/timesheet.py")
+    st.switch_page("pages/timesheet_admin.py")
 elif page == 'Month':
-    st.switch_page("pages/month.py")
+    st.switch_page("pages/month_admin.py")
 elif page == 'Logout':
     with st.spinner('Loging out'):
         st.cache_data.clear()
         sleep(2)
         st.session_state.clear() 
-        st.switch_page("login.py")
+        st.switch_page("pages/admin.py")
 
 @st.cache_data
-def load_and_process_data(file_path, sheet_name,name):
+def load_and_process_data(file_path, sheet_name):
     df = pd.read_excel(file_path,sheet_name=sheet_name)
-    filtered_df=df[df['Name']==name]
-    return filtered_df
+    return df
 # Function to check if a column name is a valid date
 def is_valid_date(column_name):
     # Check if the column name is a datetime object or can be parsed as a date
@@ -59,13 +58,18 @@ def is_valid_date(column_name):
         return True
     except ValueError:
         return False
-Name = st.session_state["Username"]   
-filtered_df = load_and_process_data(st.session_state['filename'], st.session_state['file'],Name)
-filtered_columns = [col for col in filtered_df.columns if is_valid_date(col)]
-filtered_date_df = filtered_df[filtered_columns]
+# Name = st.session_state["Username"]   
+# filtered_df = load_and_process_data(st.session_state['filename'], st.session_state['file'],Name)
+filtered_df = load_and_process_data("Attendance '24.xlsx",st.session_state['file'])
+usernames = filtered_df["Name"].tolist()
 
 st.image('Robust-Logo-400x84.png', width=300) 
 st.title(f"{st.session_state['Month']} Attendance Tracker")
+
+selected_username = st.selectbox("Select Employee", sorted(usernames))
+filtered_df=filtered_df[filtered_df['Name']==selected_username]
+filtered_columns = [col for col in filtered_df.columns if is_valid_date(col)]
+filtered_date_df = filtered_df[filtered_columns]
 
 st.markdown("""
     <style>
@@ -96,7 +100,8 @@ st.markdown("""
         }
         /*Expanders*/
         #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(10) > details,
-        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(9) > details{
+        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(9) > details,
+        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(11) > details{
             background-color:white;
         }
         /*--------------------------Responsive--------------------------*/
@@ -105,8 +110,8 @@ st.markdown("""
             }
     </style>
 """, unsafe_allow_html=True)
-
-if not filtered_df[filtered_df['Name'] == Name].empty:
+# if not filtered_df[filtered_df['Name'] == Name].empty:
+if not filtered_df[filtered_df['Name'] == selected_username].empty:
     try:
         with st.expander("", expanded=True):
             with st.container():

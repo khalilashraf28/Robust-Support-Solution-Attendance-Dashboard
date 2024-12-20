@@ -12,7 +12,7 @@ if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     with st.spinner('You must log in first!'):
         st.cache_data.clear()
         sleep(2)
-        st.switch_page("login.py")
+        st.switch_page("page/admin.py")
 
 st.set_page_config(page_title="RSS Late Analysis", layout="wide",page_icon="RSS.png",initial_sidebar_state="collapsed")
 page = st_navbar(["","Home", "Late Analysis", "Time Sheet", "Month", "Logout"])
@@ -32,32 +32,34 @@ components.html(
     height=0,
 )
 if page == 'Home':
-    st.switch_page("pages/main.py")
+    st.switch_page("pages/main_admin.py")
 elif page == 'Late Analysis':
     pass
 elif page == 'Time Sheet':
-    st.switch_page("pages/timesheet.py")
+    st.switch_page("pages/timesheet_admin.py")
 elif page == 'Month':
-    st.switch_page("pages/month.py")
+    st.switch_page("pages/month_admin.py")
 elif page == 'Logout':
     with st.spinner('Loging out'):
         st.cache_data.clear()
         sleep(2)
         st.session_state.clear() 
-        st.switch_page("login.py")
+        st.switch_page("page/admin.py")
 
 @st.cache_data
-def load_and_process_data(file_path, sheet_name,name):
+def load_and_process_data(file_path, sheet_name):
     df = pd.read_excel(file_path,sheet_name=sheet_name)
-    filtered_df=df[df['Name']==name]
+    filtered_df=df
     filtered_df['Month'] = filtered_df['Month'].dt.month_name()
     return filtered_df
 
-Name = st.session_state["Username"]   
 # filtered_df = load_and_process_data(st.session_state['filename'], st.session_state['file'],Name)
-filtered_df = load_and_process_data(st.session_state['filename'], "Lates",Name)
+filtered_df = load_and_process_data("Attendance '24.xlsx", "Lates")
+usernames = filtered_df["Name"].unique().tolist()
 st.image('Robust-Logo-400x84.png', width=300) 
 st.title(f"Late Tracker")
+selected_username = st.selectbox("Select Employee", sorted(usernames))
+filtered_df=filtered_df[filtered_df['Name']==selected_username]
 st.markdown("""
     <style>
     /*logo*/
@@ -87,13 +89,15 @@ st.markdown("""
         /*Expanders*/
         #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(10) > details,
         #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(9) > details,
-        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(11) > details{
+        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(11) > details,
+        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(12) > details,
+        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(12) > details{
             background-color:white;
         }
     </style>
 """, unsafe_allow_html=True)
 
-if not filtered_df[filtered_df['Name'] == Name].empty:
+if not filtered_df[filtered_df['Name'] == selected_username].empty:
     try:
         with st.expander("", expanded=True):
             with st.container():

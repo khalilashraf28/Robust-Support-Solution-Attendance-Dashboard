@@ -5,7 +5,7 @@ from time import sleep
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     with st.spinner('You must log in first!'):
         sleep(2)
-    st.switch_page("login.py")
+    st.switch_page("page/admin.py")
 else:
     st.set_page_config(page_title="Select Month", layout="wide",page_icon="RSS.png",initial_sidebar_state="collapsed")
     username = st.session_state["Username"]
@@ -71,25 +71,25 @@ else:
             st.session_state['file'] = "January Attendance"
             st.session_state['timesheet_name'] = "January Timesheet" 
             st.session_state['Month'] = "January"
-            st.switch_page("pages/main.py")
+            st.switch_page("pages/main_admin.py")
     with col2: 
         if st.button("FEBRUARY"):
             st.session_state['file'] = "February Attendance" 
             st.session_state['timesheet_name'] = "February Timesheet" 
             st.session_state['Month'] = "February"
-            st.switch_page("pages/main.py")
+            st.switch_page("pages/main_admin.py")
     with col3:
         if st.button("MARCH"):
             st.session_state['file'] = "March Attendance" 
             st.session_state['timesheet_name'] = "March Timesheet" 
             st.session_state['Month'] = "March"
-            st.switch_page("pages/main.py")
+            st.switch_page("pages/main_admin.py")
     with col4:
         if st.button("APRIL"):
             st.session_state['file'] = "April Attendance" 
             st.session_state['timesheet_name'] = "April Timesheet" 
             st.session_state['Month'] = "April"
-            st.switch_page("pages/main.py")
+            st.switch_page("pages/main_admin.py")
             
     col1, col2, col3,col4 = st.columns(4)
     with col1:
@@ -97,50 +97,50 @@ else:
             st.session_state['file'] = "May Attendance" 
             st.session_state['timesheet_name'] = "May Timesheet" 
             st.session_state['Month'] = "May"
-            st.switch_page("pages/main.py")
+            st.switch_page("pages/main_admin.py")
     with col2: 
         if st.button("JUNE"):
             st.session_state['file'] = "June Attendance"
             st.session_state['timesheet_name'] = "June Timesheet"  
             st.session_state['Month'] = "June"
-            st.switch_page("pages/main.py")
+            st.switch_page("pages/main_admin.py")
     with col3:
         if st.button("JULY"):
             st.session_state['file'] = "July Attendance"
             st.session_state['timesheet_name'] = "July Timesheet" 
             st.session_state['Month'] = "July" 
-            st.switch_page("pages/main.py")
+            st.switch_page("pages/main_admin.py")
     with col4:
         if st.button("AUGUST"):
             st.session_state['file'] = "August Attendance"
             st.session_state['timesheet_name'] = "August Timesheet" 
             st.session_state['Month'] = "August" 
-            st.switch_page("pages/main.py")
+            st.switch_page("pages/main_admin.py")
     col1, col2, col3,col4 = st.columns(4)
     with col1:
         if st.button("SEPTEMBER"):
             st.session_state['file'] = "September Attendance"
             st.session_state['timesheet_name'] = "September Timesheet"  
             st.session_state['Month'] = "September"
-            st.switch_page("pages/main.py")
+            st.switch_page("pages/main_admin.py")
     with col2: 
         if st.button("OCTOBER"):
             st.session_state['file'] = "October Attendance" 
             st.session_state['timesheet_name'] = "October Timesheet" 
             st.session_state['Month'] = "October"
-            st.switch_page("pages/main.py")
+            st.switch_page("pages/main_admin.py")
     with col3:
         if st.button("NOVEMBER"):
             st.session_state['file'] = "November Attendance"
             st.session_state['timesheet_name'] = "November Timesheet"  
             st.session_state['Month'] = "November"
-            st.switch_page("pages/main.py")
+            st.switch_page("pages/main_admin.py")
     with col4:
         if st.button("DECEMBER"):
             st.session_state['file'] = "December Attendance"
             st.session_state['timesheet_name'] = "December Timesheet"  
             st.session_state['Month'] = "December"
-            st.switch_page("pages/main.py")
+            st.switch_page("pages/main_admin.py")
            
                  
     # disable = 'Week 51\n2nd-15th Dec is currently not available.'
@@ -151,7 +151,7 @@ else:
         print('disable not available')
 
     if st.button("← Years"):
-        st.switch_page("pages/year.py")
+        st.switch_page("pages/year_admin.py")
 
 
 
