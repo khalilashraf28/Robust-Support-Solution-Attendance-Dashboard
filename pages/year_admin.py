@@ -7,9 +7,8 @@ st.set_page_config(page_title="Select Year", page_icon="RSS.png", layout="wide")
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     with st.spinner('You must log in first!'):
         sleep(2)
-        st.switch_page("login.py")
+        st.switch_page("pages/admin.py")
 
-# st.snow()
 username = st.session_state["Username"]
 mycode = f"<script>alert('Welcome, {username}!');</script>"
 components.html(mycode, height=0, width=0)

@@ -12,7 +12,7 @@ if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     with st.spinner('You must log in first!'):
         st.cache_data.clear()
         sleep(2)
-        st.switch_page("page/admin.py")
+        st.switch_page("pages/admin.py")
 
 st.set_page_config(page_title="RSS Late Analysis", layout="wide",page_icon="RSS.png",initial_sidebar_state="collapsed")
 page = st_navbar(["","Home", "Late Analysis", "Time Sheet", "Month", "Logout"])
@@ -44,7 +44,7 @@ elif page == 'Logout':
         st.cache_data.clear()
         sleep(2)
         st.session_state.clear() 
-        st.switch_page("page/admin.py")
+        st.switch_page("pages/admin.py")
 
 @st.cache_data
 def load_and_process_data(file_path, sheet_name):
@@ -90,7 +90,6 @@ st.markdown("""
         #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(10) > details,
         #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(9) > details,
         #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(11) > details,
-        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(12) > details,
         #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(12) > details{
             background-color:white;
         }

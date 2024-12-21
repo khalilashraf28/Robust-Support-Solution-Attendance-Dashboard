@@ -99,6 +99,10 @@ st.markdown("""
         #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(9) > details{
             background-color:white;
         }
+        /*designation
+        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div:nth-child(9) > details > div > div > div > div > div > div > div > div:nth-child(2) > div > div > div > div > div > div > div > div{
+            height:200px;
+        }*/
         /*--------------------------Responsive--------------------------*/
             @media (max-width: 480px) {
 
@@ -162,6 +166,21 @@ if not filtered_df[filtered_df['Name'] == Name].empty:
                         </div>
                         """, unsafe_allow_html=True
                     )
+                # # Card 3 - Designation
+                # with col3:
+                #     designation = (
+                #     filtered_df['Designation'].iloc[0] 
+                #     if not filtered_df.empty and 'Designation' in filtered_df and not filtered_df['Designation'].isna().iloc[0]
+                #     else "Not Available"
+                # )
+                #     st.markdown(
+                #         f"""
+                #         <div class='gradient-card' style='background: linear-gradient(135deg, #FF4B78, #D9325E);'>
+                #             <h3>Designation</h3>
+                #             <h2>{designation}</h2>
+                #         </div>
+                #         """, unsafe_allow_html=True
+                #     )  
 
                 # Four Columns for Statistics
                 col1, col2, col3, col4 = st.columns(4)
@@ -258,7 +277,7 @@ if not filtered_df[filtered_df['Name'] == Name].empty:
                     st.markdown(
                         f"""
                         <div class='gradient-card' style='background: linear-gradient(135deg, #C25A00, #8E4000);'>
-                            <h3>Leaves</h3>
+                            <h3>{st.session_state['Month']} Leaves</h3>
                             <h2>{filtered_df['Paid Leave'].iloc[0]}</h2>
                         </div>
                         """, unsafe_allow_html=True
@@ -289,10 +308,15 @@ if not filtered_df[filtered_df['Name'] == Name].empty:
         st.warning(f"You are not in the Index - {e} Contact to Development Team")
     except Exception as e:
         st.warning(f"You are not in the list: {e} Contact to Development Team")
-    
+        
+    new_columns = {
+        col: pd.to_datetime(col, errors='coerce').strftime('%d-%m-%Y') if pd.to_datetime(col, errors='coerce') else col
+        for col in filtered_date_df.columns
+    }
+    filtered_date_df.rename(columns=new_columns, inplace=True)
     if filtered_date_df is not None:
         try:
-            with st.expander("", expanded=True):
+            with st.expander("This Month Attendance", expanded=True):
                 with st.container():
                     st.dataframe(
                         filtered_date_df.reset_index(drop=True),
@@ -348,7 +372,7 @@ st.markdown(
     <div class="query-box">
         <h2>Send your queries to</h2>
         <p><a href="mailto:mustafas@xclusivetradinginc.com" style="color: black; text-decoration: none;">mustafas@xclusivetradinginc.com</a></p>
-        <p>Ph: +923473090660</p>
+        <p>Ph: +923113859635</p>
     </div>
     """,
     unsafe_allow_html=True

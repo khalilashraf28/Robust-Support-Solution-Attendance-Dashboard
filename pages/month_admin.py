@@ -5,7 +5,7 @@ from time import sleep
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     with st.spinner('You must log in first!'):
         sleep(2)
-    st.switch_page("page/admin.py")
+    st.switch_page("pages/admin.py")
 else:
     st.set_page_config(page_title="Select Month", layout="wide",page_icon="RSS.png",initial_sidebar_state="collapsed")
     username = st.session_state["Username"]

@@ -11,7 +11,7 @@ if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     with st.spinner('You must log in first!'):
         st.cache_data.clear()
         sleep(2)
-        st.switch_page("page/admin.py")
+        st.switch_page("pages/admin.py")
 
 st.set_page_config(page_title="RSS Attendance Dashboard", layout="wide",page_icon="RSS.png",initial_sidebar_state="collapsed")
 page = st_navbar(["","Home", "Late Analysis", "Time Sheet", "Month", "Logout"])
@@ -263,7 +263,7 @@ if not filtered_df[filtered_df['Name'] == selected_username].empty:
                     st.markdown(
                         f"""
                         <div class='gradient-card' style='background: linear-gradient(135deg, #C25A00, #8E4000);'>
-                            <h3>Leaves</h3>
+                            <h3>{st.session_state['Month']} Leaves</h3>
                             <h2>{filtered_df['Paid Leave'].iloc[0]}</h2>
                         </div>
                         """, unsafe_allow_html=True
@@ -294,7 +294,11 @@ if not filtered_df[filtered_df['Name'] == selected_username].empty:
         st.warning(f"You are not in the Index - {e} Contact to Development Team")
     except Exception as e:
         st.warning(f"You are not in the list: {e} Contact to Development Team")
-    
+        
+    new_columns = {
+        col: pd.to_datetime(col, errors='coerce').strftime('%d-%m-%Y') if pd.to_datetime(col, errors='coerce') else col
+        for col in filtered_date_df.columns
+    }
     if filtered_date_df is not None:
         try:
             with st.expander("", expanded=True):
@@ -353,7 +357,7 @@ st.markdown(
     <div class="query-box">
         <h2>Send your queries to</h2>
         <p><a href="mailto:mustafas@xclusivetradinginc.com" style="color: black; text-decoration: none;">mustafas@xclusivetradinginc.com</a></p>
-        <p>Ph: +923473090660</p>
+        <p>Ph: +923113859635</p>
     </div>
     """,
     unsafe_allow_html=True
