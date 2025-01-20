@@ -234,7 +234,7 @@ st.markdown(
     <div class="query-box">
         <h2>Send your queries to</h2>
         <p><a href="mailto:mustafas@xclusivetradinginc.com" style="color: black; text-decoration: none;">mustafas@xclusivetradinginc.com</a></p>
-        <p>Ph: +923473090660</p>
+        <p>Ph: +923113859635</p>
     </div>
     """,
     unsafe_allow_html=True

@@ -77,9 +77,10 @@ st.markdown("<div class='centered'><h3>Select the Year Below:</h3></div>", unsaf
 
 # Add functionality with Streamlit's native button
 if st.button("2025"):
-    # st.session_state['filename'] = "Attendance '24.xlsx"
-    # st.switch_page("pages/month.py")
-    st.error('Wait till new Year')
+    st.session_state['filename'] = "Attendance '25.xlsx"
+    st.session_state['timesheet_filename'] = "Timesheet '25.xlsx"
+    st.switch_page("pages/month.py")
+    # st.error('Wait till new Year')
     
 if st.button("2024"):
     st.session_state['filename'] = "Attendance '24.xlsx"

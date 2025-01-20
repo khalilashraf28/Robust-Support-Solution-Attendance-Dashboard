@@ -59,284 +59,291 @@ def is_valid_date(column_name):
         return True
     except ValueError:
         return False
-Name = st.session_state["Username"]   
-filtered_df = load_and_process_data(st.session_state['filename'], st.session_state['file'],Name)
-filtered_columns = [col for col in filtered_df.columns if is_valid_date(col)]
-filtered_date_df = filtered_df[filtered_columns]
+try:
+    Name = st.session_state["Username"]   
+    filtered_df = load_and_process_data(st.session_state['filename'], st.session_state['file'],Name)
+    filtered_columns = [col for col in filtered_df.columns if is_valid_date(col)]
+    filtered_date_df = filtered_df[filtered_columns]
 
-st.image('Robust-Logo-400x84.png', width=300) 
-st.title(f"{st.session_state['Month']} Attendance Tracker")
+    st.image('Robust-Logo-400x84.png', width=300) 
+    st.title(f"{st.session_state['Month']} Attendance Tracker")
 
-st.markdown("""
-    <style>
-    /*logo*/
-        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(6) > div > div > div > img{
-            background-color: white;
-            border-radius: 100px;
-            padding: 15px;
-            align-item:center;
-            margin-right:30px;
-        }
-        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(6) > div > div{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            margin-top:-50px;
-        }
-        /*body*/
-        /*#root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container,*/
-        #root > div:nth-child(1) > div.withScreencast > div > div{
-            background: linear-gradient(145deg, #00a2f17d, #00a2f1, #1470b3);
-        }
-        /*Title*/
-        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(7) > div > div > div > h1{
-           text-align: center;
-           color:white;
-        }
-        /*Expanders*/
-        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(10) > details,
-        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(9) > details{
-            background-color:white;
-        }
-        /*designation
-        #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div:nth-child(9) > details > div > div > div > div > div > div > div > div:nth-child(2) > div > div > div > div > div > div > div > div{
-            height:200px;
-        }*/
-        /*--------------------------Responsive--------------------------*/
-            @media (max-width: 480px) {
-
+    st.markdown("""
+        <style>
+        /*logo*/
+            #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(6) > div > div > div > img{
+                background-color: white;
+                border-radius: 100px;
+                padding: 15px;
+                align-item:center;
+                margin-right:30px;
             }
-    </style>
-""", unsafe_allow_html=True)
+            #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(6) > div > div{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                margin-top:-50px;
+            }
+            /*body*/
+            /*#root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container,*/
+            #root > div:nth-child(1) > div.withScreencast > div > div{
+                background: linear-gradient(145deg, #00a2f17d, #00a2f1, #1470b3);
+            }
+            /*Title*/
+            #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(7) > div > div > div > h1{
+            text-align: center;
+            color:white;
+            }
+            /*Expanders*/
+            #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(10) > details,
+            #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container > div > div > div > div:nth-child(9) > details{
+                background-color:white;
+            }
+            /*designation
+            #root > div:nth-child(1) > div.withScreencast > div > div > div > section > div.stAppViewBlockContainer.block-container.st-emotion-cache-1jicfl2.ea3mdgi5 > div > div > div > div:nth-child(9) > details > div > div > div > div > div > div > div > div:nth-child(2) > div > div > div > div > div > div > div > div{
+                height:200px;
+            }*/
+            /*--------------------------Responsive--------------------------*/
+                @media (max-width: 480px) {
 
-if not filtered_df[filtered_df['Name'] == Name].empty:
-    try:
-        with st.expander("", expanded=True):
-            with st.container():
-                # Custom CSS for gradient cards and hover effect
-                st.markdown("""
-                    <style>
-                    .gradient-card {
-                        border-radius: 10px;
-                        padding: 20px;
-                        text-align: center;
-                        color: white;
-                        margin: 10px;
-                        font-family: Arial, sans-serif;
-                        font-size: 16px;
-                    }
-                    .gradient-card h3 {
-                        margin: 0;
-                        font-size: 20px;
-                    }
-                    .gradient-card h2 {
-                        margin: 0;
-                        font-size: 28px;
-                    }
-                    .gradient-card:hover {
-                        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-                        transform: scale(1.02);
-                        transition: 0.3s;
-                    }
-                    </style>
-                """, unsafe_allow_html=True)
+                }
+        </style>
+    """, unsafe_allow_html=True)
 
-                # Dashboard Columns
-                col1, col2 = st.columns(2)
-
-                # Card 1 - Department
-                with col1:
-                    st.markdown(
-                        f"""
-                        <div class='gradient-card' style='background: linear-gradient(135deg, #00A5C2, #007899);'>
-                            <h3>Department</h3>
-                            <h2>{filtered_df['Department'].iloc[0]}</h2>
-                        </div>
-                        """, unsafe_allow_html=True
-                    )
-
-                # Card 2 - Name
-                with col2:
-                    st.markdown(
-                        f"""
-                        <div class='gradient-card' style='background: linear-gradient(135deg, #FF4B78, #D9325E);'>
-                            <h3>Name</h3>
-                            <h2>{filtered_df['Name'].iloc[0]}</h2>
-                        </div>
-                        """, unsafe_allow_html=True
-                    )
-                # # Card 3 - Designation
-                # with col3:
-                #     designation = (
-                #     filtered_df['Designation'].iloc[0] 
-                #     if not filtered_df.empty and 'Designation' in filtered_df and not filtered_df['Designation'].isna().iloc[0]
-                #     else "Not Available"
-                # )
-                #     st.markdown(
-                #         f"""
-                #         <div class='gradient-card' style='background: linear-gradient(135deg, #FF4B78, #D9325E);'>
-                #             <h3>Designation</h3>
-                #             <h2>{designation}</h2>
-                #         </div>
-                #         """, unsafe_allow_html=True
-                #     )  
-
-                # Four Columns for Statistics
-                col1, col2, col3, col4 = st.columns(4)
-
-                # Card Set 1
-                with col1:
-                    # filtered_df['Total Calender Days']
-                    if 'Total Calender Days' in filtered_df.columns and not filtered_df['Total Calender Days'].isnull().iloc[0]:
-                        st.markdown(
-                            f"""
-                            <div class='gradient-card' style='background: linear-gradient(135deg, #00C224, #008A17);'>
-                                <h3>Total Calendar Days</h3>
-                                <h2>{filtered_df['Total Calender Days'].iloc[0]}</h2>
-                            </div>
-                            """, unsafe_allow_html=True
-                        )
-                    else:
-                        st.markdown(
-                            f"""
-                            <div class='gradient-card' style='background: linear-gradient(135deg, #00C224, #008A17);'>
-                                <h3>Total Calendar Days</h3>
-                                <h2>Not Introduced.</h2>
-                            </div>
-                            """, unsafe_allow_html=True
-                        )
-                    if 'Total Earned Leaves' in filtered_df.columns and not filtered_df['Total Earned Leaves'].isnull().iloc[0]:
-                        st.markdown(
-                            f"""
-                            <div class='gradient-card' style='background: linear-gradient(135deg, #00C224, #008A17);'>
-                                <h3>Total Earned Leaves</h3>
-                                <h2>{filtered_df['Total Earned Leaves'].iloc[0]}</h2>
-                            </div>
-                            """, unsafe_allow_html=True
-                        )
-                    else:
-                        st.markdown(
-                            f"""
-                            <div class='gradient-card' style='background: linear-gradient(135deg, #00C224, #008A17);'>
-                                <h3>Total Earned Leaves</h3>
-                                <h2>Not Introduced.</h2>
-                            </div>
-                            """, unsafe_allow_html=True
-                        )
-
-                # Card Set 2
-                with col2:
-                    if 'Late' in filtered_df.columns and not filtered_df['Late'].isnull().iloc[0]:
-                        st.markdown(
-                            f"""
-                            <div class='gradient-card' style='background: linear-gradient(135deg, #FFFD80, #E3D65B); color: black;'>
-                                <h3>Late Arrival</h3>
-                                <h2>{filtered_df['Late'].iloc[0]}</h2>
-                            </div>
-                            """, unsafe_allow_html=True
-                        )
-                    else:
-                        st.markdown(
-                            f"""
-                            <div class='gradient-card' style='background: linear-gradient(135deg, #FFFD80, #E3D65B); color: black;'>
-                                <h3>Late Arrival</h3>
-                                <h2>Not Introduced.</h2>
-                            </div>
-                            """, unsafe_allow_html=True
-                        )
-                    if 'Total Availed Leaves' in filtered_df.columns and not filtered_df['Total Availed Leaves'].isnull().iloc[0]:
-                        st.markdown(
-                            f"""
-                            <div class='gradient-card' style='background: linear-gradient(135deg, #FFFD80, #E3D65B); color: black;'>
-                                <h3>Total Availed Leaves</h3>
-                                <h2>{filtered_df['Total Availed Leaves'].iloc[0]}</h2>
-                            </div>
-                            """, unsafe_allow_html=True
-                        )
-                    else:
-                        st.markdown(
-                            f"""
-                            <div class='gradient-card' style='background: linear-gradient(135deg, #FFFD80, #E3D65B); color: black;'>
-                                <h3>Total Availed Leaves</h3>
-                                <h2>"Total Availed Leaves" data is not available.</h2>
-                            </div>
-                            """, unsafe_allow_html=True
-                        )
-
-                # Card Set 3
-                with col3:
-                    st.markdown(
-                        f"""
-                        <div class='gradient-card' style='background: linear-gradient(135deg, #C25A00, #8E4000);'>
-                            <h3>Absent</h3>
-                            <h2>{filtered_df['Absent'].iloc[0]}</h2>
-                        </div>
-                        """, unsafe_allow_html=True
-                    )
-                    st.markdown(
-                        f"""
-                        <div class='gradient-card' style='background: linear-gradient(135deg, #C25A00, #8E4000);'>
-                            <h3>{st.session_state['Month']} Leaves</h3>
-                            <h2>{filtered_df['Paid Leave'].iloc[0]}</h2>
-                        </div>
-                        """, unsafe_allow_html=True
-                    )
-
-                # Card Set 4
-                with col4:
-                    st.markdown(
-                        f"""
-                        <div class='gradient-card' style='background: linear-gradient(135deg, #4BA7FF, #006DC9);'>
-                            <h3>Holidays</h3>
-                            <h2>{filtered_df['Holiday'].iloc[0]}</h2>
-                        </div>
-                        """, unsafe_allow_html=True
-                    )
-                    st.markdown(
-                        f"""
-                        <div class='gradient-card' style='background: linear-gradient(135deg, #4BA7FF, #006DC9);'>
-                            <h3>Remaining Leaves</h3>
-                            <h2>{filtered_df['Remaining Leaves'].iloc[0]}</h2>
-                        </div>
-                        """, unsafe_allow_html=True
-                    )
-    
-    except KeyError as e:
-        st.warning(f"KeyError: Missing column in the dataframe or Employee was not hired - {e} Contact to Development Team")
-    except IndexError as e:
-        st.warning(f"You are not in the Index - {e} Contact to Development Team")
-    except Exception as e:
-        st.warning(f"You are not in the list: {e} Contact to Development Team")
-        
-    new_columns = {
-        col: pd.to_datetime(col, errors='coerce').strftime('%d-%m-%Y') if pd.to_datetime(col, errors='coerce') else col
-        for col in filtered_date_df.columns
-    }
-    filtered_date_df.rename(columns=new_columns, inplace=True)
-    if filtered_date_df is not None:
+    if not filtered_df[filtered_df['Name'] == Name].empty:
         try:
-            with st.expander("This Month Attendance", expanded=True):
+            with st.expander("", expanded=True):
                 with st.container():
-                    st.dataframe(
-                        filtered_date_df.reset_index(drop=True),
-                        height=100,
-                        use_container_width=True
-                    )
-        except Exception as e:
-            st.error(f"An error occurred: {e} Contact the Development Team")
+                    # Custom CSS for gradient cards and hover effect
+                    st.markdown("""
+                        <style>
+                        .gradient-card {
+                            border-radius: 10px;
+                            padding: 20px;
+                            text-align: center;
+                            color: white;
+                            margin: 10px;
+                            font-family: Arial, sans-serif;
+                            font-size: 16px;
+                        }
+                        .gradient-card h3 {
+                            margin: 0;
+                            font-size: 20px;
+                        }
+                        .gradient-card h2 {
+                            margin: 0;
+                            font-size: 28px;
+                        }
+                        .gradient-card:hover {
+                            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+                            transform: scale(1.02);
+                            transition: 0.3s;
+                        }
+                        </style>
+                    """, unsafe_allow_html=True)
 
-else:
-    # HTML for the alert
-    alert_html = f"""
-    <div style="padding: 10px; background-color: #f8d7da; border: 1px solid #f5c2c7; color: #842029; border-radius: 5px; margin-bottom: 20px;">
-        <strong>Alert:</strong> You are not listed on the attendance sheet of {st.session_state['Month']}.
-    </div>
-    """
-    # {st.session_state['Month']}
-    # Render the alert in the Streamlit app
-    st.markdown(alert_html, unsafe_allow_html=True)      
-    
+                    # Dashboard Columns
+                    col1, col2 = st.columns(2)
+
+                    # Card 1 - Department
+                    with col1:
+                        st.markdown(
+                            f"""
+                            <div class='gradient-card' style='background: linear-gradient(135deg, #00A5C2, #007899);'>
+                                <h3>Department</h3>
+                                <h2>{filtered_df['Department'].iloc[0]}</h2>
+                            </div>
+                            """, unsafe_allow_html=True
+                        )
+
+                    # Card 2 - Name
+                    with col2:
+                        st.markdown(
+                            f"""
+                            <div class='gradient-card' style='background: linear-gradient(135deg, #FF4B78, #D9325E);'>
+                                <h3>Name</h3>
+                                <h2>{filtered_df['Name'].iloc[0]}</h2>
+                            </div>
+                            """, unsafe_allow_html=True
+                        )
+                    # # Card 3 - Designation
+                    # with col3:
+                    #     designation = (
+                    #     filtered_df['Designation'].iloc[0] 
+                    #     if not filtered_df.empty and 'Designation' in filtered_df and not filtered_df['Designation'].isna().iloc[0]
+                    #     else "Not Available"
+                    # )
+                    #     st.markdown(
+                    #         f"""
+                    #         <div class='gradient-card' style='background: linear-gradient(135deg, #FF4B78, #D9325E);'>
+                    #             <h3>Designation</h3>
+                    #             <h2>{designation}</h2>
+                    #         </div>
+                    #         """, unsafe_allow_html=True
+                    #     )  
+
+                    # Four Columns for Statistics
+                    col1, col2, col3, col4 = st.columns(4)
+
+                    # Card Set 1
+                    with col1:
+                        # filtered_df['Total Calender Days']
+                        if 'Total Calender Days' in filtered_df.columns and not filtered_df['Total Calender Days'].isnull().iloc[0]:
+                            st.markdown(
+                                f"""
+                                <div class='gradient-card' style='background: linear-gradient(135deg, #00C224, #008A17);'>
+                                    <h3>Total Calendar Days</h3>
+                                    <h2>{filtered_df['Total Calender Days'].iloc[0]}</h2>
+                                </div>
+                                """, unsafe_allow_html=True
+                            )
+                        else:
+                            st.markdown(
+                                f"""
+                                <div class='gradient-card' style='background: linear-gradient(135deg, #00C224, #008A17);'>
+                                    <h3>Total Calendar Days</h3>
+                                    <h2>Not Introduced.</h2>
+                                </div>
+                                """, unsafe_allow_html=True
+                            )
+                        if 'Total Earned Leaves' in filtered_df.columns and not filtered_df['Total Earned Leaves'].isnull().iloc[0]:
+                            st.markdown(
+                                f"""
+                                <div class='gradient-card' style='background: linear-gradient(135deg, #00C224, #008A17);'>
+                                    <h3>Total Earned Leaves</h3>
+                                    <h2>{filtered_df['Total Earned Leaves'].iloc[0]}</h2>
+                                </div>
+                                """, unsafe_allow_html=True
+                            )
+                        else:
+                            st.markdown(
+                                f"""
+                                <div class='gradient-card' style='background: linear-gradient(135deg, #00C224, #008A17);'>
+                                    <h3>Total Earned Leaves</h3>
+                                    <h2>Not Introduced.</h2>
+                                </div>
+                                """, unsafe_allow_html=True
+                            )
+
+                    # Card Set 2
+                    with col2:
+                        if 'Late' in filtered_df.columns and not filtered_df['Late'].isnull().iloc[0]:
+                            st.markdown(
+                                f"""
+                                <div class='gradient-card' style='background: linear-gradient(135deg, #FFFD80, #E3D65B); color: black;'>
+                                    <h3>Late Arrival</h3>
+                                    <h2>{filtered_df['Late'].iloc[0]}</h2>
+                                </div>
+                                """, unsafe_allow_html=True
+                            )
+                        else:
+                            st.markdown(
+                                f"""
+                                <div class='gradient-card' style='background: linear-gradient(135deg, #FFFD80, #E3D65B); color: black;'>
+                                    <h3>Late Arrival</h3>
+                                    <h2>Not Introduced.</h2>
+                                </div>
+                                """, unsafe_allow_html=True
+                            )
+                        if 'Total Availed Leaves' in filtered_df.columns and not filtered_df['Total Availed Leaves'].isnull().iloc[0]:
+                            st.markdown(
+                                f"""
+                                <div class='gradient-card' style='background: linear-gradient(135deg, #FFFD80, #E3D65B); color: black;'>
+                                    <h3>Total Availed Leaves</h3>
+                                    <h2>{filtered_df['Total Availed Leaves'].iloc[0]}</h2>
+                                </div>
+                                """, unsafe_allow_html=True
+                            )
+                        else:
+                            st.markdown(
+                                f"""
+                                <div class='gradient-card' style='background: linear-gradient(135deg, #FFFD80, #E3D65B); color: black;'>
+                                    <h3>Total Availed Leaves</h3>
+                                    <h2>"Total Availed Leaves" data is not available.</h2>
+                                </div>
+                                """, unsafe_allow_html=True
+                            )
+
+                    # Card Set 3
+                    with col3:
+                        st.markdown(
+                            f"""
+                            <div class='gradient-card' style='background: linear-gradient(135deg, #C25A00, #8E4000);'>
+                                <h3>Absent</h3>
+                                <h2>{filtered_df['Absent'].iloc[0]}</h2>
+                            </div>
+                            """, unsafe_allow_html=True
+                        )
+                        st.markdown(
+                            f"""
+                            <div class='gradient-card' style='background: linear-gradient(135deg, #C25A00, #8E4000);'>
+                                <h3>{st.session_state['Month']} Leaves</h3>
+                                <h2>{filtered_df['Paid Leave'].iloc[0]}</h2>
+                            </div>
+                            """, unsafe_allow_html=True
+                        )
+
+                    # Card Set 4
+                    with col4:
+                        st.markdown(
+                            f"""
+                            <div class='gradient-card' style='background: linear-gradient(135deg, #4BA7FF, #006DC9);'>
+                                <h3>Holidays</h3>
+                                <h2>{filtered_df['Holiday'].iloc[0]}</h2>
+                            </div>
+                            """, unsafe_allow_html=True
+                        )
+                        st.markdown(
+                            f"""
+                            <div class='gradient-card' style='background: linear-gradient(135deg, #4BA7FF, #006DC9);'>
+                                <h3>Remaining Leaves</h3>
+                                <h2>{filtered_df['Remaining Leaves'].iloc[0]}</h2>
+                            </div>
+                            """, unsafe_allow_html=True
+                        )
+        
+        except KeyError as e:
+            st.warning(f"KeyError: Missing column in the dataframe or Employee was not hired - {e} Contact to Development Team")
+        except IndexError as e:
+            st.warning(f"You are not in the Index - {e} Contact to Development Team")
+        except Exception as e:
+            st.warning(f"You are not in the list: {e} Contact to Development Team")
+            
+        new_columns = {
+            col: pd.to_datetime(col, errors='coerce').strftime('%d-%m-%Y') if pd.to_datetime(col, errors='coerce') else col
+            for col in filtered_date_df.columns
+        }
+        filtered_date_df.rename(columns=new_columns, inplace=True)
+        if filtered_date_df is not None:
+            try:
+                with st.expander("This Month Attendance", expanded=True):
+                    with st.container():
+                        st.dataframe(
+                            filtered_date_df.reset_index(drop=True),
+                            height=100,
+                            use_container_width=True
+                        )
+            except Exception as e:
+                st.error(f"An error occurred: {e} Contact the Development Team")
+
+    else:
+        # HTML for the alert
+        alert_html = f"""
+        <div style="padding: 10px; background-color: #f8d7da; border: 1px solid #f5c2c7; color: #842029; border-radius: 5px; margin-bottom: 20px;">
+            <strong>Alert:</strong> You are not listed on the attendance sheet of {st.session_state['Month']}.
+        </div>
+        """
+        # {st.session_state['Month']}
+        # Render the alert in the Streamlit app
+        st.markdown(alert_html, unsafe_allow_html=True)      
+except KeyError as e:
+    # Handle missing session state keys
+    st.info(f"{st.session_state.get('Username', 'Username')} month is not updated. KeyError: {e}")
+
+except Exception as e:
+    # Handle other unexpected exceptions
+    st.info(f"An error occurred: {e}")    
 st.markdown(
 """
 <style>
